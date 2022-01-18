@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/ThalMug/botus#readme",
   "dependencies": {
-    "discord": "^0.8.2"
+    "csv-parser": "^3.0.0",
+    "discord.js": "12.5.1",
+    "dotenv": "^14.2.0",
+    "googleapis": "^39.2.0",
+    "request": "2.81.0"
   }
 }
