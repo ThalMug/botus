@@ -1,0 +1,22 @@
+{
+  "name": "botus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThalMug/botus.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThalMug/botus/issues"
+  },
+  "homepage": "https://github.com/ThalMug/botus#readme",
+  "dependencies": {
+    "discord": "^0.8.2"
+  }
+}
