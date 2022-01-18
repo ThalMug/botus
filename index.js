@@ -28,6 +28,15 @@ function add_user(json_data,author){
     fs.writeFileSync('infos.json',data); 
 }
 
+function moyenne(score){
+    let mean = 0;
+    score.forEach(e => {
+        mean += e;
+    });
+    mean /= score.length;
+    return mean;
+}
+
 
 client.on('message',async message => {
     
@@ -37,11 +46,7 @@ client.on('message',async message => {
 
         if(message.content.startsWith('_monscore')){
             let score = json_data[message.author.id].score;
-            let mean = 0;
-            score.forEach(e => {
-                mean += e;
-            });
-            mean /= score.length;
+            let mean = moyenne(score);
             message.reply(":red_circle: Ton score moyen au SUTOM est : "+ mean.toFixed(2) + " (je suis Thierry Beccaro)");
         }
         else if(message.content.startsWith('_ajouterscore')){
@@ -52,8 +57,30 @@ client.on('message',async message => {
             add_user(json_data,message.author);
             message.reply("joins the battle !");
         }
+        else if(message.content.startsWith('_leaderboard')){
+            let score_tab = [];
+            let keys = Object.keys(json_data);
+            for(var i = 0;i<keys.length;i++){
+                score_tab.push({
+                    "pseudo":json_data[keys[i]].discordusr,
+                    "moyenne":moyenne(json_data[keys[i]].score)
+                })
+            }
+            score_tab.sort(function compare(a, b) {
+                if (a.moyenne < b.moyenne)
+                   return -1;
+                if (a.moyenne > b.moyenne)
+                   return 1;
+                return 0;
+              });
+            let string = ":red_circle:\nLe classement du SUTOM est le suivant :\n\n";
+            for(i = 0;i<keys.length;i++){
+                string = string + (i+1) + ". " + score_tab[i].pseudo + " ("+score_tab[i].moyenne.toFixed(2) + " pts)" + ".\n";
+            }
+            message.reply(string);
+        }
         else if(message.content.startsWith('_help')){
-            message.reply("Mes commandes sont :\n- _leaderboard pour avoir le ranking du SUTOM\n- _add [en cours de construction]");
+            message.reply("Le préfixe utilisé est '_'. \n\nLes différentes commandes sont :\n:red_circle:monscore (pour voir vos points moyens)\n:red_circle:ajouterscore (pour ajouter un point au classement)\n:red_circle:ajouternom (pour vous inscrire si vous n'êtes pas inscrits)\n:red_circle:leaderboard (pour avoir le classement)\n");
         }
     }
 });
